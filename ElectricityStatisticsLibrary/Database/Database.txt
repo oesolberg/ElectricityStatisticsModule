@@ -1,0 +1,66 @@
+﻿IF OBJECT_ID('dbo.HourlyStatistic', 'U') IS NOT NULL 
+  DROP TABLE dbo.HourlyStatistic; 
+
+IF OBJECT_ID('dbo.MonthlyStatistic', 'U') IS NOT NULL 
+  DROP TABLE dbo.MonthlyStatistic; 
+
+IF OBJECT_ID('dbo.WeeklyStatistic', 'U') IS NOT NULL 
+  DROP TABLE dbo.WeeklyStatistic; 
+
+        
+
+
+/****** Object:  Table [dbo].[HourStatistics]    Script Date: 7/22/2016 4:43:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HourlyStatistic](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DateTimeStartOfHour] [datetime] NOT NULL,
+	[DateTimeEndOfHour] [datetime]  NULL,
+	[HourNumber] [int] NOT NULL,
+	[KWhNumberUsed] [float] NOT NULL,
+	[StartNumberOfKiloWattsUsed] [int] NOT NULL,
+	[EndNumberOfKiloWattsUsed] [int]  NULL,        
+	[CreatedDateTime] [datetime] NOT NULL,
+	[UpdatedDateTime] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[MonthStatistics]    Script Date: 7/22/2016 4:43:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MonthlyStatistic](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DateTimeStartOfMonth] [datetime] NOT NULL,
+	[DateTimeEndOfMonth] [datetime]  NULL,
+	[MonthNumber] [int] NOT NULL,
+	[KWhNumber] [int] NOT NULL,
+	[StartNumberOfKiloWattsUsed] [int] NOT NULL,
+	[EndNumberOfKiloWattsUsed] [int]  NULL,
+	[CreatedDateTime] [datetime] NOT NULL,
+	[UpdatedDateTime] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[WeekStatistics]    Script Date: 7/22/2016 4:43:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[WeeklyStatistic](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DateTimeStartOfWeek] [datetime] NOT NULL,
+	[DateTimeEndOfWeek] [datetime]  NULL,
+	[WeekNumber] [int] NOT NULL,
+	[KWhNumber] [int] NOT NULL,
+	[StartNumberOfKiloWattsUsed] [int] NOT NULL,
+	[EndNumberOfKiloWattsUsed] [int] NULL,
+	[CreatedDateTime] [datetime] NOT NULL,
+	[UpdatedDateTime] [datetime] NULL
+) ON [PRIMARY]
+
+GO

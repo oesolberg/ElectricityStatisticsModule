@@ -1,0 +1,29 @@
+﻿1. Gjøre for timer
+2. Gjøre for dager
+3. Gjøre for måneder
+4. Gjøre for years
+
+Hente ut for en måned av gangen. 01.xx.xxxx -> 31.xx.xxxx 23:59:59,997? Alle verdier som har godkjent nummer.
+
+Bygge opp for timer, dager, uker og måneder.
+Måned = slutt-start
+Dager = Dele opp fra dag til dag
+Timer = dele opp fra time til time
+	Hva gjør man hvis man ikke har verdier på flere timer? Fordele utover timene?
+
+
+1. Hente ut tidligste tidspunkt (start)
+
+
+Hvordan lage time statistikk.
+
+Alltid ha ett starttidspunkt.
+
+Det etterfølgende tidspunktet kan være følgende:
+Alltid større, men enten innenfor samme time eller inntil flere dager større.
+
+Ved samme time - Endre stopp-tidspunkt
+
+Større enn time og ikke stopp tidspunkt?
+   * Hvis under 2 timer lage to unøyaktige timer ut av det som er (forrige time stopper ved utgang, men får med seg elektrisitetsnummer fra den man har)
+   * Hvis flere timer lage timer med snittforbruk.
