@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ElectricityStatisticsLibrary.Statistics
 {
@@ -10,7 +11,7 @@ namespace ElectricityStatisticsLibrary.Statistics
         private readonly double _numberOfKiloWattHoursUsed = 0;
         private int _startNumberOfKiloWattsUsed;
         private int? _endNumberOfKiloWattsUsed;
-        
+
         public HourlyStatistic(DateTime startOfHourDateTime, int numberOfKiloWattHoursUsed)
         {
             _startOfHourDateTime = startOfHourDateTime;
@@ -58,6 +59,9 @@ namespace ElectricityStatisticsLibrary.Statistics
         {
             return new DateTime(_startOfHourDateTime.Year, _startOfHourDateTime.Month, _startOfHourDateTime.Day, _startOfHourDateTime.Hour, 0, 0);
         }
+
+
+
         public List<HourlyStatistic> AddDateTimeAndKiloWattHoursUsed(DateTime inputDateTime, int numberOfKiloWattHoursUsed)
         {
             if (_startOfHourDateTime.Date == inputDateTime.Date && _startOfHourDateTime.Hour == inputDateTime.Hour)
@@ -70,61 +74,6 @@ namespace ElectricityStatisticsLibrary.Statistics
             }
             return null;
 
-
-            //If no end hour and input hour in same hour as start hour or input hour same hour as current end hour
-            //if (!_endOfHourDateTime.HasValue && _startOfHourDateTime.Hour == inputDateTime.Hour && _startOfHourDateTime.Date == inputDateTime.Date ||
-            //    (_endOfHourDateTime.HasValue && _endOfHourDateTime.Value.Hour == inputDateTime.Hour && _endOfHourDateTime.Value.Month == inputDateTime.Month))
-            //{
-            //    _endOfHourDateTime = inputDateTime;
-            //    _endNumberOfKiloWattsUsed = numberOfKiloWattHoursUsed;
-            //    return null;
-            //}
-
-
-            //if (_endOfHourDateTime.HasValue && (_endOfHourDateTime.Value.Hour + 1 == inputDateTime.Hour) && _endOfHourDateTime.Value.Date <= inputDateTime.Date)
-            //{
-            //    //Produce new hour to store and update this to the new hour.
-            //    var hourlyStatisticsToStore = new HourlyStatistic(this._startOfHourDateTime, this._startNumberOfKiloWattsUsed, this._endOfHourDateTime.Value, this._endNumberOfKiloWattsUsed.Value);
-            //    //Update this to the new numbers
-            //    ResetThisHour(inputDateTime, numberOfKiloWattHoursUsed);
-            //    return new List<HourlyStatistic>() { hourlyStatisticsToStore };
-            //}
-            //if (!_endOfHourDateTime.HasValue && (_startOfHourDateTime < inputDateTime))
-            //{
-            //    var hourlyStatisticsToStore = new HourlyStatistic(this._startOfHourDateTime, this._startNumberOfKiloWattsUsed, new DateTime(this._startOfHourDateTime.Year, this._startOfHourDateTime.Month, this._startOfHourDateTime.Day, this._startOfHourDateTime.Hour, 59, 59), numberOfKiloWattHoursUsed);
-            //    //Update this to the new numbers
-            //    ResetThisHour(inputDateTime, numberOfKiloWattHoursUsed);
-            //    return new List<HourlyStatistic>() { hourlyStatisticsToStore };
-
-            //}
-            ////if end hour but input datetime has next hour and diff between current endhour and input is less than 15 minutes
-            //if (_endOfHourDateTime.Value.Hour + 1 >= inputDateTime.Hour)
-            //{
-            //    var listOfStatistics = new List<HourlyStatistic>();
-            //    //More than 1 hour in difference. Most possibly hours in difference.
-            //    var totalNumbersOfHoursInDifference = (inputDateTime - _endOfHourDateTime.Value).TotalHours;
-            //    //Do we keep the current number for the hour that we are in? If we have values for more than 30 minutes use what we have
-            //    if ((_endOfHourDateTime.Value - _startOfHourDateTime).TotalMinutes > 30)
-            //    {
-            //        listOfStatistics.Add(CreateHourStatisticsFromThis(this));
-            //    }
-            //    else
-            //    {
-            //        inputDateTime = _startOfHourDateTime;
-
-            //    }
-            //    //Used electricity
-            //    var numberOfKiloWattHoursUsedForPeriode = numberOfKiloWattHoursUsed - _endNumberOfKiloWattsUsed.Value;
-            //    //find the number of hours to dived the used electricty
-            //    var numberOfHours = (inputDateTime - _endOfHourDateTime.Value).TotalHours;
-            //    var numberOfKilowattHoursPerHour = (int)(numberOfKiloWattHoursUsedForPeriode / numberOfHours);
-            //    for (int i = 0; i < numberOfHours; i++)
-            //    {
-            //        //listOfStatistics.Add(CreateHourStatisticsForPeriodePart(inputDateTime, i, numberOfKilowattHoursPerHour,));
-            //    }
-            //    return listOfStatistics;
-            //}
-            //return null;
         }
 
         private void AddEndHourWithinSameHourAsStart(DateTime inputDateTime, int numberOfKiloWattHoursUsed)
@@ -148,11 +97,11 @@ namespace ElectricityStatisticsLibrary.Statistics
             else
             {
                 //Worst case: new datetime is later than the following hour
-                var numberOfHoursBetweenCurrentHourAndInputDate =(int) (inputDateTime - _startOfHourDateTime).TotalHours;
+                var numberOfHoursBetweenCurrentHourAndInputDate = (int)(inputDateTime - _startOfHourDateTime).TotalHours;
 
-                var kiloWattHoursPerHour = ((numberOfKiloWattHoursUsed - _startNumberOfKiloWattsUsed)/numberOfHoursBetweenCurrentHourAndInputDate);
+                var kiloWattHoursPerHour = ((numberOfKiloWattHoursUsed - _startNumberOfKiloWattsUsed) / numberOfHoursBetweenCurrentHourAndInputDate);
 
-                for (int i = 0; i < numberOfHoursBetweenCurrentHourAndInputDate ; i++)
+                for (int i = 0; i < numberOfHoursBetweenCurrentHourAndInputDate; i++)
                 {
                     listToReturn.Add(CreateHourStatisticsForHour(_startOfHourDateTime, i, _startNumberOfKiloWattsUsed, kiloWattHoursPerHour));
                 }
@@ -175,18 +124,6 @@ namespace ElectricityStatisticsLibrary.Statistics
 
         }
 
-        private int GetLatestKiloWattHour()
-        {
-            if (_endNumberOfKiloWattsUsed.HasValue) return _endNumberOfKiloWattsUsed.Value;
-            return _startNumberOfKiloWattsUsed;
-        }
-
-        private DateTime GetLastestDate()
-        {
-            if (_endOfHourDateTime.HasValue) return _endOfHourDateTime.Value;
-            return _startOfHourDateTime;
-        }
-
         private void SetEndOfHourIfEmpty(int numberOfKiloWattHoursUsed)
         {
             if (!_endOfHourDateTime.HasValue)
@@ -196,10 +133,6 @@ namespace ElectricityStatisticsLibrary.Statistics
             }
         }
 
-        private HourlyStatistic CreateHourStatisticsForPeriodePart(DateTime inputDateTime, int hoursToAdd, int numberOfKilowattHoursUsed)
-        {
-            return null;// new HourlyStatistic() {};
-        }
 
         private HourlyStatistic CreateHourStatisticsFromThis(HourlyStatistic hourlyStatistic)
         {

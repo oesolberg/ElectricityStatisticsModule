@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D276E16-169B-4CA3-A833-4ED1DB9550B6}</ProjectGuid>
+    <ProjectGuid>{EDF01A7D-460E-4528-B5CE-539E0E6130DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElectricityStatisticsLibrary</RootNamespace>
-    <AssemblyName>ElectricityStatisticsLibrary</AssemblyName>
+    <RootNamespace>ElectricityStatisticsLibraryTests</RootNamespace>
+    <AssemblyName>ElectricityStatisticsLibraryTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,24 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.50.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.50.1\lib\net451\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DapperExtensions, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Shouldly, Version=2.8.0.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shouldly.2.8.0\lib\net40\Shouldly.dll</HintPath>
+    <Reference Include="Shouldly, Version=2.8.1.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shouldly.2.8.1\lib\net40\Shouldly.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,21 +48,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StatisticsFacade.cs" />
-    <Compile Include="Database\DbFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statistics\WeeklyStatistic.cs" />
-    <Compile Include="Statistics\MonthlyStatistic.cs" />
-    <Compile Include="Statistics\DateTimeHelper.cs" />
-    <Compile Include="Statistics\DailyStatistic.cs" />
-    <Compile Include="Statistics\HourlyStatistics.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Database\Database.txt" />
-    <Content Include="HowTo.txt" />
+    <Compile Include="Statistics\DailyStatisticsTests.cs" />
+    <Compile Include="Statistics\DateTimeHelperTests.cs" />
+    <Compile Include="Statistics\HourlyStatisticsTests.cs" />
+    <Compile Include="Statistics\MonthlyStatisticsTests.cs" />
+    <Compile Include="Statistics\WeeklyStatisticsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElectricityStatisticsLibrary\ElectricityStatisticsLibrary.csproj">
+      <Project>{8d276e16-169b-4ca3-a833-4ed1db9550b6}</Project>
+      <Name>ElectricityStatisticsLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

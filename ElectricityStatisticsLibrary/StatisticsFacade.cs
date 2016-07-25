@@ -11,6 +11,9 @@ namespace ElectricityStatisticsLibrary
         private DbFunctions _dbHandling;
 
         private HourlyStatistic _hourlyStatistic;
+        private DailyStatistic _dailyStatistic;
+        private WeeklyStatistic _weeklyStatistic;
+        private MonthlyStatistic _monthlyStatistic;
 
         public StatisticsFacade()
         {
@@ -83,19 +86,76 @@ namespace ElectricityStatisticsLibrary
 
         private void CreateDataForDay(ElectricityData foundData)
         {
+            if (_dailyStatistic == null)
+            {
+                _dailyStatistic = new DailyStatistic(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+                return;
+            }
+            var statisticsToSave = _dailyStatistic.AddDateTimeAndKiloWattHoursUsed(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+            if (statisticsToSave == null || !statisticsToSave.Any()) return;
+
+            SaveDailyStatistics(statisticsToSave);
+
             return;
+        }
+
+        private void SaveDailyStatistics(List<DailyStatistic> statisticsToSave)
+        {
+            foreach (var dailyStatistic in statisticsToSave)
+            {
+                _dbHandling.SaveDailyStatistic(dailyStatistic);
+
+            }
         }
 
         private void CreateDataForWeek(ElectricityData foundData)
         {
+            if (_weeklyStatistic == null)
+            {
+                _weeklyStatistic = new WeeklyStatistic(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+                return;
+            }
+            var statisticsToSave = _weeklyStatistic.AddDateTimeAndKiloWattHoursUsed(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+            if (statisticsToSave == null || !statisticsToSave.Any()) return;
+
+            SaveWeeklyStatistics(statisticsToSave);
+
             return;
+        }
+
+
+        private void SaveWeeklyStatistics(List<WeeklyStatistic> statisticsToSave)
+        {
+            foreach (var weeklyStatistic in statisticsToSave)
+            {
+                _dbHandling.SaveWeeklyStatistic(weeklyStatistic);
+
+            }
         }
 
         private void CreateDataForMonth(ElectricityData foundData)
         {
+            if (_monthlyStatistic == null)
+            {
+                _monthlyStatistic = new MonthlyStatistic(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+                return;
+            }
+            var statisticsToSave = _monthlyStatistic.AddDateTimeAndKiloWattHoursUsed(foundData.FileCreatedDateTime, foundData.ElectricityValue);
+            if (statisticsToSave == null || !statisticsToSave.Any()) return;
+
+            SaveMonthlyStatistics(statisticsToSave);
+
             return;
         }
 
+        private void SaveMonthlyStatistics(List<MonthlyStatistic> statisticsToSave)
+        {
+            foreach (var monthlyStatistic in statisticsToSave)
+            {
+                _dbHandling.SaveMonthlyStatistic(monthlyStatistic);
+
+            }
+        }
         private DateTime GetEndOfMonth(DateTime dateTime)
         {
             var daysInMonth = DateTime.DaysInMonth(dateTime.Year, dateTime.Month);

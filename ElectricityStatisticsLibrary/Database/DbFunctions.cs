@@ -67,6 +67,36 @@ namespace ElectricityStatisticsLibrary.Database
                 cn.Close();
             }
         }
+
+        public void SaveDailyStatistic(DailyStatistic dailyStatistic)
+        {
+            using (var cn = new System.Data.SqlClient.SqlConnection(_connectionString))
+            {
+                cn.Open();
+                var result = cn.Insert(dailyStatistic);
+                cn.Close();
+            }
+        }
+
+        public void SaveMonthlyStatistic(MonthlyStatistic monthlyStatistic)
+        {
+            using (var cn = new System.Data.SqlClient.SqlConnection(_connectionString))
+            {
+                cn.Open();
+                var result = cn.Insert(monthlyStatistic);
+                cn.Close();
+            }
+        }
+
+        public void SaveWeeklyStatistic(WeeklyStatistic weeklyStatistic)
+        {
+            using (var cn = new System.Data.SqlClient.SqlConnection(_connectionString))
+            {
+                cn.Open();
+                var result = cn.Insert(weeklyStatistic);
+                cn.Close();
+            }
+        }
     }
 
     public class ElectricityData

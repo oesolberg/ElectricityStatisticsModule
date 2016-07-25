@@ -1,8 +1,9 @@
 ﻿using System;
+using ElectricityStatisticsLibrary.Statistics;
 using NUnit.Framework;
 using Shouldly;
 
-namespace ElectricityStatisticsLibrary.Statistics
+namespace ElectricityStatisticsLibraryTests.Statistics
 {
     public class HourlyStatisticsTests
     {
